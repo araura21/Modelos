@@ -14,7 +14,7 @@ public class PantallaBienvenida extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon icon = new ImageIcon("C:\\Users\\PACO\\Downloads\\CODE312\\CODE\\EDICOMPUCyberManagementSystem(Maven)\\Logotipo - EDICOMPU\\fondoA.jpg");
+                ImageIcon icon = new ImageIcon("..\\Logotipo - EDICOMPU\\fondoA.jpg");
                 Image img = icon.getImage();
                 g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
             }
@@ -25,7 +25,7 @@ public class PantallaBienvenida extends JFrame {
 
         // Logo (sin cambios)
         JLabel logoLabel = new JLabel();
-        ImageIcon logoIcon = new ImageIcon("C:\\Users\\PACO\\Downloads\\CODE312\\CODE\\EDICOMPUCyberManagementSystem(Maven)\\Logotipo - EDICOMPU\\Logotipo - EDICOMPU.png");
+        ImageIcon logoIcon = new ImageIcon("..\\Logotipo - EDICOMPU\\Logotipo - EDICOMPU.png");
         logoLabel.setIcon(logoIcon);
         gbc.gridx = 0;
         gbc.gridy = 0;

@@ -77,7 +77,7 @@ public class PanelGestionCiber extends JPanel {
         panel.setBorder(BorderFactory.createLineBorder(COLOR_ACENTO, 1));
         panel.putClientProperty("idComputadora", id);
 
-        JLabel etiquetaIcono = new JLabel(new ImageIcon("C:\\Users\\PACO\\Downloads\\CODE312\\CODE\\EDICOMPUCyberManagementSystem(Maven)\\Logotipo - EDICOMPU\\Compu.png"));
+        JLabel etiquetaIcono = new JLabel(new ImageIcon("..\\Logotipo - EDICOMPU\\Compu.png"));
         panel.add(etiquetaIcono, BorderLayout.CENTER);
 
         JLabel etiquetaEstado = crearEtiquetaEstilo("Inactiva", FUENTE_REGULAR, Color.RED);
