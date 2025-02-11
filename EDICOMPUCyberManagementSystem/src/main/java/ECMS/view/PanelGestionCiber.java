@@ -87,7 +87,7 @@ public class PanelGestionCiber extends JPanel {
         JLabel etiquetaIcono = new JLabel(new ImageIcon("..\\Logotipo - EDICOMPU\\Compu.png"));
         panel.add(etiquetaIcono, BorderLayout.CENTER);
 
-        JLabel etiquetaEstado = crearEtiquetaEstilo("Inactiva", FUENTE_REGULAR, Color.RED);
+        JLabel etiquetaEstado = crearEtiquetaEstilo("Inactiva", FUENTE_TITULO, Color.RED);
         panel.add(etiquetaEstado, BorderLayout.NORTH);
 
         JLabel etiquetaTiempo = crearEtiquetaEstilo("00:00:00", FUENTE_REGULAR, Color.BLACK);

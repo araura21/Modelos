@@ -123,7 +123,7 @@ public class PanelPagos extends JPanel {
             });
             ingresosTotales += entrada.getCosto();
         }
-
+        
         modeloTabla.addRow(new Object[]{"Total", "", "", "", "$" + df.format(ingresosTotales),""});
     }
 
