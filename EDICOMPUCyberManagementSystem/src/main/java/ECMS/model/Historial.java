@@ -9,13 +9,15 @@ public class Historial {
     private Instant horaFin;
     private Duration duracion;
     private double costo;
+    private String idcliente;
 
-    public Historial(int idComputadora, Instant horaInicio, Instant horaFin, double costo) {
+    public Historial(int idComputadora, Instant horaInicio, Instant horaFin, double costo, String idcliente) {
         this.idComputadora = idComputadora;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.duracion = Duration.between(horaInicio, horaFin);
         this.costo = costo;
+        this.idcliente=idcliente;
     }
 
     public int getIdComputadora() {
@@ -36,6 +38,10 @@ public class Historial {
 
     public double getCosto() {
         return costo;
+    }
+    
+    public String getIdCliente(){
+        return idcliente;
     }
 
     @Override

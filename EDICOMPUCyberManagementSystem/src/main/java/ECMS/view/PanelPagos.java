@@ -67,7 +67,7 @@ public class PanelPagos extends JPanel {
 
         add(panelControl, BorderLayout.NORTH);
 
-        modeloTabla = new DefaultTableModel(new String[]{"ID Computadora", "Hora de Inicio", "Hora de Fin", "Duración", "Costo"}, 0);
+        modeloTabla = new DefaultTableModel(new String[]{"ID Computadora", "Hora de Inicio", "Hora de Fin", "Duración", "Costo", "Cedula cliente"}, 0);
         tablaInforme = new JTable(modeloTabla);
         JScrollPane scrollPane = new JScrollPane(tablaInforme);
         add(scrollPane, BorderLayout.CENTER);
@@ -100,6 +100,12 @@ public class PanelPagos extends JPanel {
         List<Historial> historialFiltrado = gestorCyber.obtenerHistorial().stream()
                 .filter(this::coincideConFiltros)
                 .collect(Collectors.toList());
+        
+        // Verifica si el historial filtrado está vacío
+        if (historialFiltrado.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay registros para la computadora seleccionada en el rango de fechas.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         System.out.println("Tamaño del historial filtrado: " + historialFiltrado.size()); // Línea de depuración
 
@@ -112,12 +118,13 @@ public class PanelPagos extends JPanel {
                     formatter.format(entrada.getHoraInicio()),
                     formatter.format(entrada.getHoraFin()),
                     formatearDuracion(entrada.getHoraInicio(), entrada.getHoraFin()),
-                    "$" + df.format(entrada.getCosto())
+                    "$" + df.format(entrada.getCosto()),
+                    entrada.getIdCliente()
             });
             ingresosTotales += entrada.getCosto();
         }
 
-        modeloTabla.addRow(new Object[]{"Total", "", "", "", "$" + df.format(ingresosTotales)});
+        modeloTabla.addRow(new Object[]{"Total", "", "", "", "$" + df.format(ingresosTotales),""});
     }
 
     private boolean coincideConFiltros(Historial entrada) {

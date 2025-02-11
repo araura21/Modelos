@@ -1,18 +1,23 @@
 package ECMS.view;
 
+import ECMS.controller.GestorClientes;
 import ECMS.controller.GestorCyber;
+import ECMS.model.Cliente;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PanelGestionCiber extends JPanel {
-    
+    private GestorClientes gestorClientes;
     private GestorCyber gestorCiber;
     private JPanel cuadrillaComputadoras;
     private JTextArea registroActividad;
     private Timer temporizador;
+    private Map<Integer, String> computadorasClientes;
 
     private static final Color COLOR_FONDO = new Color(240, 240, 240);
     private static final Color COLOR_ACENTO = new Color(70, 130, 180);
@@ -22,6 +27,8 @@ public class PanelGestionCiber extends JPanel {
     private static final Font FUENTE_REGULAR = new Font("Arial", Font.PLAIN, 12);
 
     public PanelGestionCiber(GestorCyber gestorCiber) {
+        computadorasClientes = new HashMap<>(); // Mapa que guarda los clientes por computadora.
+        gestorClientes = new GestorClientes();
         this.gestorCiber = gestorCiber;
         gestorCiber = new GestorCyber();
         setLayout(new BorderLayout());
@@ -86,19 +93,62 @@ public class PanelGestionCiber extends JPanel {
         JLabel etiquetaTiempo = crearEtiquetaEstilo("00:00:00", FUENTE_REGULAR, Color.BLACK);
         panel.add(etiquetaTiempo, BorderLayout.WEST);
 
+        // ComboBox para seleccionar cliente
+        JComboBox<String> comboClientes = new JComboBox<>();
+        comboClientes.addItem("Seleccionar Cliente");
+        
+        for (Cliente cliente : gestorClientes.obtenerClientes()) {
+            comboClientes.addItem(cliente.getId() + " - " + cliente.getNombre());
+        }
+        comboClientes.setPreferredSize(new Dimension(110, 25)); // Tamaño similar al de los botones
+        actualizarComboClientes(comboClientes, id);
+        
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         panelBotones.setBackground(Color.WHITE);
         JButton botonIniciar = crearBotonEstilo("Iniciar", COLOR_BOTON_INICIAR);
         JButton botonDetener = crearBotonEstilo("Detener", COLOR_BOTON_PARAR);
+        botonDetener.setEnabled(false);
 
-        botonIniciar.addActionListener(e -> iniciarComputadora(id, panel, etiquetaEstado, etiquetaTiempo, botonIniciar, botonDetener));
-        botonDetener.addActionListener(e -> detenerComputadora(id, panel, etiquetaEstado, etiquetaTiempo, botonIniciar, botonDetener));
+        botonIniciar.addActionListener(e -> {
+            String idcliente = (String) comboClientes.getSelectedItem();
+            if (idcliente == null || idcliente.equals("Seleccionar Cliente")) {
+                JOptionPane.showMessageDialog(panel, "Debe seleccionar un cliente antes de iniciar.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            comboClientes.setEnabled(false); // Deshabilitar selección del cliente
+            computadorasClientes.put(id, idcliente); // Registrar cliente para la computadora
+            iniciarComputadora(id, panel, etiquetaEstado, etiquetaTiempo, botonIniciar, botonDetener);
+        });
 
+        botonDetener.addActionListener(e -> { 
+            String idcliente = (String) comboClientes.getSelectedItem();
+            computadorasClientes.remove(id); // Eliminar cliente cuando se detiene la computadora
+            comboClientes.setEnabled(true); // Habilitar selección del cliente
+            detenerComputadora(id, panel, etiquetaEstado, etiquetaTiempo, botonIniciar, botonDetener, idcliente);
+        });
+
+        panelBotones.add(comboClientes);
         panelBotones.add(botonIniciar);
         panelBotones.add(botonDetener);
+
         panel.add(panelBotones, BorderLayout.SOUTH);
 
         return panel;
+    }
+    
+    private void actualizarComboClientes(JComboBox<String> comboClientes, int id) {
+        // Deshabilitar a los clientes ya seleccionados en otras computadoras
+        for (int i = 1; i <= 10; i++) {
+            if (computadorasClientes.containsKey(i)) {
+                String clienteSeleccionado = computadorasClientes.get(i);
+                for (int j = 0; j < comboClientes.getItemCount(); j++) {
+                    if (comboClientes.getItemAt(j).equals(clienteSeleccionado)) {
+                        comboClientes.removeItemAt(j);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     private JButton crearBotonEstilo(String texto, Color color) {
@@ -120,9 +170,9 @@ public class PanelGestionCiber extends JPanel {
         actualizarRegistro("Computadora " + id + " iniciada.");
     }
 
-    private void detenerComputadora(int id, JPanel panelComputadora, JLabel etiquetaEstado, JLabel etiquetaTiempo, JButton botonIniciar, JButton botonDetener) {
+    private void detenerComputadora(int id, JPanel panelComputadora, JLabel etiquetaEstado, JLabel etiquetaTiempo, JButton botonIniciar, JButton botonDetener, String idcliente) {
         String tiempoActivo = gestorCiber.obtenerTiempoActivoComputadora(id);
-        double costo = gestorCiber.detenerComputadora(id);
+        double costo = gestorCiber.detenerComputadora(id, idcliente);
         etiquetaEstado.setText("Inactiva");
         etiquetaEstado.setForeground(Color.RED);
         etiquetaTiempo.setText("00:00:00");

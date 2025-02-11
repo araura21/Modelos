@@ -42,12 +42,12 @@ public class GestorCyber {
         }
     }
 
-    public double detenerComputadora(int id) {
+    public double detenerComputadora(int id, String idcliente) {
         Computadora computadora = obtenerComputadora(id);
         if (computadora != null && computadora.estaActiva()) {
             computadora.detener();
             double costo = computadora.calcularCosto();
-            gestorHistorial.agregarEntradaHistorial(computadora, costo);
+            gestorHistorial.agregarEntradaHistorial(computadora, costo, idcliente);
             notificarEscuchadoresActualizacionHistorial();
             return costo;
         }

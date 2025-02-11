@@ -9,8 +9,8 @@ import java.util.List;
 public class GestorHistorial {
     private List<Historial> historial = new ArrayList<>();
 
-    public void agregarEntradaHistorial(Computadora computadora, double costo) {
-        Historial entrada = new Historial(computadora.getId(), computadora.getHoraInicio(), computadora.getHoraFin(), costo);
+    public void agregarEntradaHistorial(Computadora computadora, double costo, String idcliente) {
+        Historial entrada = new Historial(computadora.getId(), computadora.getHoraInicio(), computadora.getHoraFin(), costo, idcliente);
         historial.add(entrada);
     }
 
