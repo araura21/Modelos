@@ -6,6 +6,7 @@ import ECMS.view.PantallaLogin;
 import ECMS.view.PanelPagos;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -71,7 +72,7 @@ public class MenuPrincipal extends JFrame {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.setBackground(new Color(26, 35, 126));
 
-        String[] etiquetasBotones = {"Inicio", "Clientes", "Gestion Cyber", "Pagos"};
+        String[] etiquetasBotones = {"Inicio", "Clientes", "Gestión Cyber", "Pagos"};
         for (String etiqueta : etiquetasBotones) {
             JButton boton = crearBotonLateral(etiqueta);
             boton.addActionListener(e -> diseñoTarjetas.show(panelPrincipal, etiqueta.replace(" ", "")));
@@ -109,7 +110,7 @@ public class MenuPrincipal extends JFrame {
 
         panelPrincipal.add(crearPanelInicio(), "Inicio");
         panelPrincipal.add(crearPanelClientes(), "Clientes");
-        panelPrincipal.add(crearPanelGestionCyber(), "GestionCyber");
+        panelPrincipal.add(crearPanelGestionCyber(), "GestiónCyber");
         panelPrincipal.add(crearPanelPagos(), "Pagos");
 
         return panelPrincipal;
@@ -157,11 +158,69 @@ public class MenuPrincipal extends JFrame {
         menu.add(elementoMenu);
     }
 
-    private JPanel crearPanelInicio() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(new JLabel("Bienvenido al Sistema de Gestión Cyber EDICOMPU", SwingConstants.CENTER), BorderLayout.CENTER);
+   private JPanel crearPanelInicio() {
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon imagen = new ImageIcon("..\\Logotipo - EDICOMPU\\fondoB.jpg"); // Cambia la ruta a tu imagen
+                g.drawImage(imagen.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        panel.setLayout(new BorderLayout());
+
+        // Título
+        JLabel titulo = new JLabel("Bienvenido al Sistema de Gestión Cyber EDICOMPU", SwingConstants.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 20));
+        titulo.setForeground(Color.WHITE);
+
+        // Panel de contacto (izquierda inferior)
+        JPanel panelContacto = new JPanel();
+        panelContacto.setLayout(new BoxLayout(panelContacto, BoxLayout.Y_AXIS));
+        panelContacto.setBackground(new Color(0, 0, 0, 150)); // Semi-transparente
+        panelContacto.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.WHITE), "Cómo Contactarnos", 2, 2, new Font("Arial", Font.BOLD, 14), Color.WHITE));
+
+        JLabel lblTelefono = new JLabel("📞 Teléfono: +2787508");
+        JLabel lblEmail = new JLabel("✉️ Email: A.raura@edicompu.com");
+        JLabel lblDireccion = new JLabel("📍 Dirección: Av. Ilalo #Oe4-50");
+
+        lblTelefono.setForeground(Color.WHITE);
+        lblEmail.setForeground(Color.WHITE);
+        lblDireccion.setForeground(Color.WHITE);
+
+        panelContacto.add(lblTelefono);
+        panelContacto.add(lblEmail);
+        panelContacto.add(lblDireccion);
+
+        // Botón "Contáctanos" (derecha inferior)
+        JButton btnContactanos = new JButton("Contáctanos");
+        btnContactanos.setFont(new Font("Arial", Font.BOLD, 16));
+        btnContactanos.setBackground(Color.BLUE);
+        btnContactanos.setForeground(Color.WHITE);
+        btnContactanos.setFocusPainted(false);
+        btnContactanos.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+
+        btnContactanos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "¡Gracias por contactarnos!\nEn breve nos comunicaremos contigo.", "Contacto", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        // Panel inferior para organizar la sección de contacto y el botón
+        JPanel panelInferior = new JPanel(new BorderLayout());
+        panelInferior.setOpaque(false);
+        panelInferior.add(panelContacto, BorderLayout.WEST);
+        panelInferior.add(btnContactanos, BorderLayout.EAST);
+
+        // Agregar componentes al panel principal
+        panel.add(titulo, BorderLayout.CENTER);
+        panel.add(panelInferior, BorderLayout.SOUTH);
+
         return panel;
     }
+
+    
 
     private JPanel crearPanelClientes() {
         return new PanelGestionClientes();

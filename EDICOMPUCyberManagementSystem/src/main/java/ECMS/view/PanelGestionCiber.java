@@ -100,7 +100,7 @@ public class PanelGestionCiber extends JPanel {
         for (Cliente cliente : gestorClientes.obtenerClientes()) {
             comboClientes.addItem(cliente.getId() + " - " + cliente.getNombre());
         }
-        comboClientes.setPreferredSize(new Dimension(110, 25)); // Tamaño similar al de los botones
+        comboClientes.setPreferredSize(new Dimension(100, 25)); // Tamaño similar al de los botones
         actualizarComboClientes(comboClientes, id);
         
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
