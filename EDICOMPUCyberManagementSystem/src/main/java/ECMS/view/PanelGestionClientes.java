@@ -15,13 +15,13 @@ import java.awt.event.MouseEvent;
 import java.util.regex.Pattern;
 
 public class PanelGestionClientes extends JPanel {
-    private final GestorClientes gestorClientes;
+    private GestorClientes gestorClientes;
     private JTable tablaClientes;
     private DefaultTableModel modeloTabla;
     private JTable tablaBusqueda;
     private DefaultTableModel modeloBusqueda;
-    private final JTextField campoCedula, campoNombre, campoDireccion, campoTelefono, campoCorreo, campoBuscar;
-    private final JButton botonAgregar, botonActualizar, botonEliminar, botonLimpiar, botonBuscar;
+    private JTextField campoCedula, campoNombre, campoDireccion, campoTelefono, campoCorreo, campoBuscar;
+    private JButton botonAgregar, botonActualizar, botonEliminar, botonLimpiar, botonBuscar;
 
     public PanelGestionClientes() {
         gestorClientes = new GestorClientes();
@@ -138,7 +138,18 @@ public class PanelGestionClientes extends JPanel {
     
     // Panel de búsqueda se configura en setupSearchPanel()
 }
+private void PanelSuperior(){
+    
+      ImageIcon icono = new ImageIcon("ruta/a/tu/imagen.png");
+        Image imagenEscalada = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        JLabel labelImagen = new JLabel(new ImageIcon(imagenEscalada));
+        JPanel panelImagen = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panelImagen.add(labelImagen);
 
+        JPanel panelSuperior = new JPanel(new BorderLayout());
+        panelSuperior.add(panelImagen, BorderLayout.WEST);
+
+}
 // Ajuste complementario del panel de búsqueda
 private void setupSearchPanel() {
     JPanel panelBusquedaCompleto = new JPanel(new BorderLayout());
@@ -312,7 +323,7 @@ private void setupSearchPanel() {
             });
         }
     }
-
+    
     private void buscarClientes() {
         String terminoBusqueda = campoBuscar.getText().toLowerCase();
         modeloBusqueda.setRowCount(0);
