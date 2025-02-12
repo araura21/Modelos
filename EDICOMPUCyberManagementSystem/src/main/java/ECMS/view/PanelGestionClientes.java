@@ -66,7 +66,7 @@ public class PanelGestionClientes extends JPanel {
         // Panel Superior (Imagen y Título)
         JPanel panelSuperior = new JPanel(new BorderLayout());
         ImageIcon icono = new ImageIcon("..\\Logotipo - EDICOMPU\\clients.png");
-        Image imagenEscalada = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        Image imagenEscalada = icono.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         JLabel labelImagen = new JLabel(new ImageIcon(imagenEscalada));
         JLabel etiquetaTitulo = new JLabel("Gestión Clientes", SwingConstants.CENTER);
         etiquetaTitulo.setFont(new Font("Arial", Font.BOLD, 24));
@@ -77,7 +77,9 @@ public class PanelGestionClientes extends JPanel {
         JPanel panelTitulo = new JPanel();
         panelTitulo.add(etiquetaTitulo);
 
-        panelSuperior.add(panelImagen, BorderLayout.WEST);
+        JPanel panelAuxiliar = new JPanel(new BorderLayout());
+        panelAuxiliar.add(panelImagen, BorderLayout.CENTER);
+        
         panelSuperior.add(panelTitulo, BorderLayout.CENTER);
 
         panelContenedor.add(panelSuperior, BorderLayout.NORTH);
@@ -117,6 +119,7 @@ public class PanelGestionClientes extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         panelFormulario.add(panelBotones, gbc);
 
+        panelContenedor.add(panelAuxiliar, BorderLayout.WEST);
         panelContenedor.add(panelFormulario, BorderLayout.CENTER);
 
         add(panelContenedor, BorderLayout.NORTH);
@@ -202,6 +205,9 @@ public class PanelGestionClientes extends JPanel {
     private void cargarClienteSeleccionado() {
         int filaSeleccionada = tablaClientes.getSelectedRow();
         if (filaSeleccionada != -1) {
+            // Forzar la actualización de los valores en los campos de texto
+            campoCedula.setText("");
+            campoTelefono.setText("");
             campoCedula.setText((String) modeloTabla.getValueAt(filaSeleccionada, 0));
             campoNombre.setText((String) modeloTabla.getValueAt(filaSeleccionada, 1));
             campoDireccion.setText((String) modeloTabla.getValueAt(filaSeleccionada, 2));
