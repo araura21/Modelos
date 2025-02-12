@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ public class PanelGestionCiber extends JPanel {
     private JTextArea registroActividad;
     private Timer temporizador;
     private Map<Integer, String> computadorasClientes;
+    private List<Cliente> listaClientes;
 
     private static final Color COLOR_FONDO = new Color(240, 240, 240);
     private static final Color COLOR_ACENTO = new Color(70, 130, 180);
@@ -28,13 +30,17 @@ public class PanelGestionCiber extends JPanel {
 
     public PanelGestionCiber(GestorCyber gestorCiber) {
         computadorasClientes = new HashMap<>(); // Mapa que guarda los clientes por computadora.
-        gestorClientes = new GestorClientes();
         this.gestorCiber = gestorCiber;
-        gestorCiber = new GestorCyber();
+        gestorClientes = new GestorClientes();
         setLayout(new BorderLayout());
         setBackground(COLOR_FONDO);
         
         initComponents();
+        
+        listaClientes = gestorClientes.obtenerClientes();
+        actualizarTodosLosCombos();
+        
+        
         iniciarTemporizador();
     }
 
@@ -61,8 +67,20 @@ public class PanelGestionCiber extends JPanel {
         JScrollPane scrollPane = new JScrollPane(registroActividad);
         panelPrincipal.add(scrollPane, BorderLayout.SOUTH);
 
+        listaClientes = gestorClientes.obtenerClientes();
+        actualizarTodosLosCombos();
         inicializarCuadrillaComputadoras();
     }
+    
+    public void agregarListenerCambioPestana(JTabbedPane tabbedPane) {
+    tabbedPane.addChangeListener(e -> {
+        if (tabbedPane.getSelectedComponent() == this) {
+            listaClientes = gestorClientes.obtenerClientes();
+            actualizarTodosLosCombos();
+        }
+    });
+}
+
 
     private JLabel crearEtiquetaEstilo(String texto, Font fuente, Color color) {
         JLabel etiqueta = new JLabel(texto, SwingConstants.CENTER);
@@ -76,9 +94,12 @@ public class PanelGestionCiber extends JPanel {
             JPanel panelComputadora = crearPanelComputadora(i);
             cuadrillaComputadoras.add(panelComputadora);
         }
+        listaClientes = gestorClientes.obtenerClientes();
+        actualizarTodosLosCombos();
     }
 
     private JPanel crearPanelComputadora(int id) {
+        listaClientes = gestorClientes.obtenerClientes();
         JPanel panel = new JPanel(new BorderLayout(5, 5));
         panel.setBackground(Color.WHITE);
         panel.setBorder(BorderFactory.createLineBorder(COLOR_ACENTO, 1));
@@ -97,7 +118,7 @@ public class PanelGestionCiber extends JPanel {
         JComboBox<String> comboClientes = new JComboBox<>();
         comboClientes.addItem("Seleccionar Cliente");
         
-        for (Cliente cliente : gestorClientes.obtenerClientes()) {
+        for (Cliente cliente : listaClientes) {
             comboClientes.addItem(cliente.getId() + " - " + cliente.getNombre());
         }
         comboClientes.setPreferredSize(new Dimension(100, 25)); // Tamaño similar al de los botones
@@ -115,16 +136,26 @@ public class PanelGestionCiber extends JPanel {
                 JOptionPane.showMessageDialog(panel, "Debe seleccionar un cliente antes de iniciar.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            comboClientes.setEnabled(false); // Deshabilitar selección del cliente
-            computadorasClientes.put(id, idcliente); // Registrar cliente para la computadora
+
+            comboClientes.setEnabled(false); 
+            computadorasClientes.put(id, idcliente); // Registrar cliente
             iniciarComputadora(id, panel, etiquetaEstado, etiquetaTiempo, botonIniciar, botonDetener);
+
+            // Actualizar todos los combobox después de la selección
+            actualizarTodosLosCombos();
         });
 
         botonDetener.addActionListener(e -> { 
-            String idcliente = (String) comboClientes.getSelectedItem();
-            computadorasClientes.remove(id); // Eliminar cliente cuando se detiene la computadora
-            comboClientes.setEnabled(true); // Habilitar selección del cliente
+            String idcliente = computadorasClientes.get(id);
+            if (idcliente != null) {
+                computadorasClientes.remove(id); // Eliminar cliente de la computadora
+            }
+
+            comboClientes.setEnabled(true);
             detenerComputadora(id, panel, etiquetaEstado, etiquetaTiempo, botonIniciar, botonDetener, idcliente);
+
+            // Actualizar combobox en todas las computadoras
+            actualizarTodosLosCombos();
         });
 
         panelBotones.add(comboClientes);
@@ -137,14 +168,71 @@ public class PanelGestionCiber extends JPanel {
     }
     
     private void actualizarComboClientes(JComboBox<String> comboClientes, int id) {
-        // Deshabilitar a los clientes ya seleccionados en otras computadoras
-        for (int i = 1; i <= 10; i++) {
-            if (computadorasClientes.containsKey(i)) {
-                String clienteSeleccionado = computadorasClientes.get(i);
-                for (int j = 0; j < comboClientes.getItemCount(); j++) {
-                    if (comboClientes.getItemAt(j).equals(clienteSeleccionado)) {
-                        comboClientes.removeItemAt(j);
-                        break;
+        // Obtener la lista actualizada de clientes antes de llenar el ComboBox
+        listaClientes = gestorClientes.obtenerClientes();
+        
+        String seleccionActual = (String) comboClientes.getSelectedItem();
+
+        comboClientes.removeAllItems();
+        comboClientes.addItem("Seleccionar Cliente");
+
+        for (Cliente cliente : listaClientes) {
+            String clienteString = cliente.getId() + " - " + cliente.getNombre();
+
+            // Si el cliente no está en uso o es el que estaba seleccionado, añadirlo al combo
+            if (!computadorasClientes.containsValue(clienteString) || 
+                (seleccionActual != null && seleccionActual.equals(clienteString))) {
+                comboClientes.addItem(clienteString);
+            }
+        }
+
+        // Restaurar selección si sigue siendo válida
+        if (seleccionActual != null && comboClientes.getItemCount() > 1) {
+            comboClientes.setSelectedItem(seleccionActual);
+        }
+    }
+
+    
+    private void actualizarTodosLosCombos() {
+        // Obtener la lista más reciente de clientes antes de actualizar los ComboBox
+        listaClientes = gestorClientes.obtenerClientes(); 
+
+        for (Component componente : cuadrillaComputadoras.getComponents()) {
+            if (componente instanceof JPanel) {
+                JPanel panelComputadora = (JPanel) componente;
+                JComboBox<String> comboClientes = null;
+
+                // Buscar el ComboBox dentro del panel
+                for (Component comp : panelComputadora.getComponents()) {
+                    if (comp instanceof JPanel) {
+                        for (Component subComp : ((JPanel) comp).getComponents()) {
+                            if (subComp instanceof JComboBox) {
+                                comboClientes = (JComboBox<String>) subComp;
+                            }
+                        }
+                    }
+                }
+
+                if (comboClientes != null) {
+                    String seleccionActual = (String) comboClientes.getSelectedItem();
+
+                    // Limpiar y volver a llenar el combo
+                    comboClientes.removeAllItems();
+                    comboClientes.addItem("Seleccionar Cliente");
+
+                    for (Cliente cliente : listaClientes) {
+                        String clienteString = cliente.getId() + " - " + cliente.getNombre();
+
+                        // Verificar si el cliente ya está asignado a otra computadora
+                        if (!computadorasClientes.containsValue(clienteString) || 
+                            (seleccionActual != null && seleccionActual.equals(clienteString))) {
+                            comboClientes.addItem(clienteString);
+                        }
+                    }
+
+                    // Restaurar selección si sigue siendo válida
+                    if (seleccionActual != null && comboClientes.getItemCount() > 1) {
+                        comboClientes.setSelectedItem(seleccionActual);
                     }
                 }
             }
@@ -178,6 +266,12 @@ public class PanelGestionCiber extends JPanel {
         etiquetaTiempo.setText("00:00:00");
         botonIniciar.setEnabled(true);
         botonDetener.setEnabled(false);
+        
+        // Eliminar cliente del mapa
+        computadorasClientes.remove(id);
+
+        // Llamar a la actualización de todos los ComboBox
+        actualizarTodosLosCombos();
         
         DecimalFormat df = new DecimalFormat("#.##");
         actualizarRegistro("Computadora " + id + " detenida. Tiempo activo: " + tiempoActivo + ", Costo: $" + df.format(costo));

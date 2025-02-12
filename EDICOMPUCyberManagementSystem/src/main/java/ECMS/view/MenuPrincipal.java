@@ -1,5 +1,6 @@
-package ECMS.controller;
+package ECMS.view;
 
+import ECMS.controller.GestorCyber;
 import ECMS.view.PanelGestionClientes;
 import ECMS.view.PanelGestionCiber;
 import ECMS.view.PantallaLogin;

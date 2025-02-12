@@ -40,25 +40,47 @@ public class PanelGestionClientes extends JPanel {
         botonEliminar = new JButton("Eliminar");
         botonLimpiar = new JButton("Limpiar");
         botonBuscar = new JButton("Buscar");
-
+        
         // Setup main components
+        
         setupFormPanel();
         setupTables();
         setupSearchPanel();
         setupButtonListeners();
+
         
         // Load initial data
         cargarClientes();
     }
 
     private void setupFormPanel() {
+        JPanel panelContenedor = new JPanel(new BorderLayout());
         JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.EAST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Panel Superior (Imagen y Título)
+        JPanel panelSuperior = new JPanel(new BorderLayout());
+        ImageIcon icono = new ImageIcon("..\\Logotipo - EDICOMPU\\clients.png");
+        Image imagenEscalada = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        JLabel labelImagen = new JLabel(new ImageIcon(imagenEscalada));
+        JLabel etiquetaTitulo = new JLabel("Gestión Clientes", SwingConstants.CENTER);
+        etiquetaTitulo.setFont(new Font("Arial", Font.BOLD, 24));
+        etiquetaTitulo.setForeground(new Color(70, 130, 180));
+
+        JPanel panelImagen = new JPanel();
+        panelImagen.add(labelImagen);
+        JPanel panelTitulo = new JPanel();
+        panelTitulo.add(etiquetaTitulo);
+
+        panelSuperior.add(panelImagen, BorderLayout.WEST);
+        panelSuperior.add(panelTitulo, BorderLayout.CENTER);
+
+        panelContenedor.add(panelSuperior, BorderLayout.NORTH);
 
         // Set uniform size for text fields
         Dimension tamañoCampo = new Dimension(300, 25);
@@ -78,7 +100,6 @@ public class PanelGestionClientes extends JPanel {
             gbc.gridx = 0;
             gbc.gridy = i;
             panelFormulario.add(new JLabel(etiquetas[i], SwingConstants.RIGHT), gbc);
-
             gbc.gridx = 1;
             gbc.weightx = 1.0;
             panelFormulario.add(campos[i], gbc);
@@ -90,90 +111,78 @@ public class PanelGestionClientes extends JPanel {
         panelBotones.add(botonActualizar);
         panelBotones.add(botonLimpiar);
         panelBotones.add(botonEliminar);
-
         gbc.gridx = 0;
         gbc.gridy = etiquetas.length;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         panelFormulario.add(panelBotones, gbc);
 
-        // Add form panel to main panel
-        add(panelFormulario, BorderLayout.NORTH);
+        panelContenedor.add(panelFormulario, BorderLayout.CENTER);
+
+        add(panelContenedor, BorderLayout.NORTH);
     }
+    
+    private void setupTables() {
+        String[] columnNames = {"N° Cédula", "Nombre", "Dirección", "Teléfono", "Correo"};
 
-   private void setupTables() {
-    String[] columnNames = {"N° Cédula", "Nombre", "Dirección", "Teléfono", "Correo"};
-    
-    // Configuración de la tabla principal
-    modeloTabla = new DefaultTableModel(columnNames, 0) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
-    tablaClientes = new JTable(modeloTabla);
-    
-    // Crear scroll pane para la tabla principal con tamaño preferido
-    JScrollPane scrollPane = new JScrollPane(tablaClientes);
-    scrollPane.setPreferredSize(new Dimension(600, 300)); // Ancho reducido
-    
-    // Configurar el panel central para contener la tabla principal
-    JPanel panelCentral = new JPanel(new BorderLayout());
-    panelCentral.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    panelCentral.add(scrollPane, BorderLayout.CENTER);
-    
-    // Configuración de la tabla de búsqueda
-    modeloBusqueda = new DefaultTableModel(columnNames, 0) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
-    tablaBusqueda = new JTable(modeloBusqueda);
-    JScrollPane scrollBusqueda = new JScrollPane(tablaBusqueda);
-    scrollBusqueda.setPreferredSize(new Dimension(300, 300));
-    
-    // Agregar las tablas al panel principal
-    add(panelCentral, BorderLayout.CENTER);
-    
-    // Panel de búsqueda se configura en setupSearchPanel()
-}
-private void PanelSuperior(){
-    
-      ImageIcon icono = new ImageIcon("ruta/a/tu/imagen.png");
-        Image imagenEscalada = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-        JLabel labelImagen = new JLabel(new ImageIcon(imagenEscalada));
-        JPanel panelImagen = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panelImagen.add(labelImagen);
+        // Configuración de la tabla principal
+        modeloTabla = new DefaultTableModel(columnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tablaClientes = new JTable(modeloTabla);
 
-        JPanel panelSuperior = new JPanel(new BorderLayout());
-        panelSuperior.add(panelImagen, BorderLayout.WEST);
+        // Crear scroll pane para la tabla principal con tamaño preferido
+        JScrollPane scrollPane = new JScrollPane(tablaClientes);
+        scrollPane.setPreferredSize(new Dimension(600, 300)); // Ancho reducido
 
-}
-// Ajuste complementario del panel de búsqueda
-private void setupSearchPanel() {
-    JPanel panelBusquedaCompleto = new JPanel(new BorderLayout());
-    panelBusquedaCompleto.setPreferredSize(new Dimension(520, 400)); // Ancho ajustado
+        // Configurar el panel central para contener la tabla principal
+        JPanel panelCentral = new JPanel(new BorderLayout());
+        panelCentral.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelCentral.add(scrollPane, BorderLayout.CENTER);
+
+        // Configuración de la tabla de búsqueda
+        modeloBusqueda = new DefaultTableModel(columnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tablaBusqueda = new JTable(modeloBusqueda);
+        JScrollPane scrollBusqueda = new JScrollPane(tablaBusqueda);
+        scrollBusqueda.setPreferredSize(new Dimension(300, 300));
+
+        // Agregar las tablas al panel principal
+        add(panelCentral, BorderLayout.CENTER);
+
+    }
     
-    // Panel para la barra de búsqueda y botón
-    JPanel panelBusqueda = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-    panelBusqueda.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-    
-    campoBuscar.setPreferredSize(new Dimension(200, 25));
-    panelBusqueda.add(new JLabel("Buscar:"));
-    panelBusqueda.add(campoBuscar);
-    panelBusqueda.add(botonBuscar);
-    
-    // Configurar panel de resultados de búsqueda
-    JScrollPane scrollBusqueda = new JScrollPane(tablaBusqueda);
-    
-    // Agregar componentes al panel de búsqueda
-    panelBusquedaCompleto.add(panelBusqueda, BorderLayout.NORTH);
-    panelBusquedaCompleto.add(scrollBusqueda, BorderLayout.CENTER);
-    
-    // Agregar el panel de búsqueda a la derecha
-    add(panelBusquedaCompleto, BorderLayout.EAST);
-}
+    // Ajuste complementario del panel de búsqueda
+    private void setupSearchPanel() {
+        JPanel panelBusquedaCompleto = new JPanel(new BorderLayout());
+        panelBusquedaCompleto.setPreferredSize(new Dimension(520, 400)); // Ancho ajustado
+
+        // Panel para la barra de búsqueda y botón
+        JPanel panelBusqueda = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        panelBusqueda.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        campoBuscar.setPreferredSize(new Dimension(200, 25));
+        panelBusqueda.add(new JLabel("Buscar:"));
+        panelBusqueda.add(campoBuscar);
+        panelBusqueda.add(botonBuscar);
+
+        // Configurar panel de resultados de búsqueda
+        JScrollPane scrollBusqueda = new JScrollPane(tablaBusqueda);
+
+        // Agregar componentes al panel de búsqueda
+        panelBusquedaCompleto.add(panelBusqueda, BorderLayout.NORTH);
+        panelBusquedaCompleto.add(scrollBusqueda, BorderLayout.CENTER);
+
+        // Agregar el panel de búsqueda a la derecha
+        add(panelBusquedaCompleto, BorderLayout.EAST);
+    }
 
     private void setupButtonListeners() {
         botonAgregar.addActionListener(e -> agregarCliente());
@@ -217,6 +226,12 @@ private void setupSearchPanel() {
 
     private void agregarCliente() {
         if (!validarCampos()) return;
+
+        String id = campoCedula.getText();
+        if (gestorClientes.existeCliente(id)) {
+            JOptionPane.showMessageDialog(this, "Ya existe un cliente con esta cédula.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         Cliente cliente = crearClienteDesdeFormulario();
         gestorClientes.agregarCliente(cliente);
@@ -310,7 +325,7 @@ private void setupSearchPanel() {
         campoCorreo.setText("");
         tablaClientes.clearSelection();
     }
-
+  
     private void cargarClientes() {
         modeloTabla.setRowCount(0);
         for (Cliente cliente : gestorClientes.obtenerClientes()) {

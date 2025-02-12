@@ -112,4 +112,9 @@ public class GestorClientes {
     public void eliminarCliente(String id) {
         coleccionClientes.deleteOne(Filters.eq("id", id));
     }
+    
+    public boolean existeCliente(String id) {
+        Document cliente = coleccionClientes.find(Filters.eq("id", id)).first();
+        return cliente != null; // Si hay un cliente con ese ID, retorna true
+    }
 }

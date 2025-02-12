@@ -1,7 +1,6 @@
 package ECMS.view;
 
 import ECMS.controller.GestorClientes;
-import ECMS.controller.MenuPrincipal;
 import ECMS.model.Usuarios;
 import javax.swing.*;
 import java.awt.*;

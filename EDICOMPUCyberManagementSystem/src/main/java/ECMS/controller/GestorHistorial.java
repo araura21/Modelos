@@ -12,7 +12,7 @@ public class GestorHistorial {
 
     public void agregarEntradaHistorial(Computadora computadora, double costo, String idcliente) {
         Historial entrada = new Historial(computadora.getId(), computadora.getHoraInicio(), computadora.getHoraFin(), costo, idcliente);
-        historial.add(entrada);
+        //historial.add(entrada);
         gestorClientes.agregarHistorial(entrada);
     }
 
