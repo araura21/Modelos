@@ -71,20 +71,6 @@ public class PantallaLogin extends JFrame {
         gbc.gridwidth = 2;
         panel.add(campoContrasena, gbc);
 
-        // Panel de opciones (Recordarme y Olvidé mi contraseña)
-        /*JPanel panelOpciones = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panelOpciones.setOpaque(false);
-        JCheckBox recordarme = new JCheckBox("Recordarme");
-        recordarme.setForeground(new Color(173, 216, 230)); // Azul claro
-        recordarme.setOpaque(false);
-        JLabel olvideContrasena = new JLabel("¿Olvidaste tu contraseña?");
-        olvideContrasena.setForeground(new Color(135, 206, 250)); // Azul cielo
-        olvideContrasena.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        panelOpciones.add(recordarme);
-        panelOpciones.add(olvideContrasena);
-        gbc.gridy = 5;
-        panel.add(panelOpciones, gbc);*/
-
         // Botón de inicio de sesión
         JButton botonLogin = new JButton("INICIAR SESIÓN");
         botonLogin.setBackground(new Color(24, 2, 64)); // Azul brillante
@@ -94,21 +80,15 @@ public class PantallaLogin extends JFrame {
         gbc.gridwidth = 2;
         panel.add(botonLogin, gbc);
 
-        // Efecto hover para el botón de login
-        botonLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                botonLogin.setBackground(new Color(30, 144, 255)); // Azul más oscuro al pasar el mouse
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                botonLogin.setBackground(new Color(0, 149, 255)); // Volver al color original
-            }
-        });
-
         // Acción del botón de login
         botonLogin.addActionListener(e -> {
-            String usuario = campoUsuario.getText();
+            String usuario = campoUsuario.getText().toLowerCase();
             String contrasena = new String(campoContrasena.getPassword());
+
+            if (contrasena.length() < 6) {
+                JOptionPane.showMessageDialog(null, "La contraseña debe tener al menos 6 caracteres", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             if (autenticar(usuario, contrasena)) {
                 JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
@@ -132,16 +112,22 @@ public class PantallaLogin extends JFrame {
 
         // Acción del botón de registro
         botonRegistro.addActionListener(e -> {
-            String usuario = campoUsuario.getText();
+            String usuario = campoUsuario.getText().toLowerCase();
             String contrasena = new String(campoContrasena.getPassword());
 
             if (usuario.isEmpty() || contrasena.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "El usuario y la contraseña no pueden estar vacíos", "Error de registro", JOptionPane.ERROR_MESSAGE);
-            } else {
-                Usuarios nuevoUsuario = new Usuarios(usuario, contrasena);
-                gestorClientes.agregarUsuarios(nuevoUsuario);
-                JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente");
+                return;
             }
+
+            if (contrasena.length() < 6) {
+                JOptionPane.showMessageDialog(null, "La contraseña debe tener al menos 6 caracteres", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Usuarios nuevoUsuario = new Usuarios(usuario, contrasena);
+            gestorClientes.agregarUsuarios(nuevoUsuario);
+            JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente");
         });
 
         // Agregar el panel al frame
@@ -149,16 +135,11 @@ public class PantallaLogin extends JFrame {
     }
 
     private boolean autenticar(String usuario, String contrasena) {
-        Usuarios usuarioObj = gestorClientes.obtenerUsuarios(usuario);
-        if (usuarioObj != null && usuarioObj.getContraseña().equals(contrasena)) {
-            return true;
-        }
-        return false;
+        Usuarios usuarioObj = gestorClientes.obtenerUsuarios(usuario.toLowerCase());
+        return usuarioObj != null && usuarioObj.getContraseña().equals(contrasena);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new PantallaLogin().setVisible(true);
-        });
+        SwingUtilities.invokeLater(() -> new PantallaLogin().setVisible(true));
     }
 }

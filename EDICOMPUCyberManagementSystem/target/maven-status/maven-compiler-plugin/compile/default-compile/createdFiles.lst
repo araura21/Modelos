@@ -19,7 +19,6 @@ ECMS\view\PanelGestionClientes$1.class
 ECMS\view\MenuPrincipal.class
 ECMS\model\InformeGeneral.class
 ECMS\view\PantallaBienvenida.class
-ECMS\view\PantallaLogin$2.class
 ECMS\controller\GestorCyber.class
 ECMS\model\Alquiler.class
 ECMS\view\EDICOMPUCyberManagementSystem.class
