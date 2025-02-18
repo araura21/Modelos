@@ -1,23 +1,23 @@
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\controller\GestorClientes.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\controller\GestorHistorial.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\controller\GestorEscuchadores.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\EDICOMPUCyberManagementSystem.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\PanelPagos.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\PantallaBienvenida.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\controller\GestorCyber.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\PantallaLogin.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\InformeGeneral.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\controller\GestorAlquileres.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\PanelGestionClientes.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\Alquiler.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\utils\GestorContraseñas.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\Tarifa.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\Usuarios.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\Login.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\PanelGestionCiber.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\Computadora.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\Historial.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\controller\GestorTarifa.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\Cliente.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\ConexionBaseDatos.java
-C:\Users\USER\Desktop\PROYECTOS\Modelos\Modelos\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\MenuPrincipal.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\controller\GestorAlquileres.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\controller\GestorClientes.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\controller\GestorCyber.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\controller\GestorEscuchadores.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\controller\GestorHistorial.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\controller\GestorTarifa.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\Alquiler.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\Cliente.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\Computadora.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\ConexionBaseDatos.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\Historial.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\InformeGeneral.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\Tarifa.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\model\Usuarios.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\utils\GestorContraseñas.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\EDICOMPUCyberManagementSystem.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\Login.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\MenuPrincipal.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\PanelGestionCiber.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\PanelGestionClientes.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\PanelPagos.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\PantallaBienvenida.java
+C:\Users\DELL\Documents\modelos de procesos\proyecto\Cyber\Modelos\EDICOMPUCyberManagementSystem\src\main\java\ECMS\view\PantallaLogin.java

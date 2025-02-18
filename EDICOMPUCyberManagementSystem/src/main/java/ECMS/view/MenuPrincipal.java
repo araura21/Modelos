@@ -172,7 +172,7 @@ public class MenuPrincipal extends JFrame {
 
         // Título
         JLabel titulo = new JLabel("Bienvenido al Sistema de Gestión Cyber EDICOMPU", SwingConstants.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 20));
+        titulo.setFont(new Font("Times New Roman", Font.BOLD, 40));
         titulo.setForeground(Color.WHITE);
 
         // Panel de contacto (izquierda inferior)
